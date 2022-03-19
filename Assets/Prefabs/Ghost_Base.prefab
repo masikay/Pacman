@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1026707048143366383}
   - component: {fileID: 5406218017045857121}
   - component: {fileID: 3397030200443132249}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 8045615603768042001}
   - component: {fileID: 2713864844615726353}
   - component: {fileID: 8704388834477074791}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ghost_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0
+  inside: {fileID: 0}
+  outside: {fileID: 0}
 --- !u!114 &8045615603768042001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +280,7 @@ GameObject:
   - component: {fileID: 4804361793060477906}
   - component: {fileID: 6985148600715423066}
   - component: {fileID: 332361956494891500}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +384,7 @@ GameObject:
   - component: {fileID: 4125608033991685516}
   - component: {fileID: 273772529979393413}
   - component: {fileID: 156321172472830714}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5071576016758891506}
   - component: {fileID: 3783272554314908993}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
