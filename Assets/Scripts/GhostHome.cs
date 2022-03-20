@@ -13,7 +13,18 @@ public class GhostHome : GhostBehaviour
 
     private void OnDisable()
     {
-        StartCoroutine(ExitTransition());
+        if (this.gameObject.activeSelf)
+        {
+            StartCoroutine(ExitTransition());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (this.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            this.ghost.movement.SetDirection(-this.ghost.movement.direction);
+        }
     }
 
     private IEnumerator ExitTransition()
