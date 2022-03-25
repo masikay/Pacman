@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 343903061583344000}
   - component: {fileID: 5431957475089801110}
   - component: {fileID: -1159333429564351759}
+  - component: {fileID: 306061423880679790}
   m_Layer: 8
   m_Name: PowerPellet
   m_TagString: Untagged
@@ -126,3 +127,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 50
   duration: 8
+--- !u!114 &306061423880679790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9006532758041000571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435cba2bdfe178948a9d4e8b13820c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 703f86846c404d64dab8918f7c1edde8, type: 3}
+  - {fileID: 0}
+  animationTime: 0.125
+  loop: 1

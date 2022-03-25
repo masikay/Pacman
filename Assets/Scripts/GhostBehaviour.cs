@@ -12,6 +12,15 @@ public abstract class GhostBehaviour : MonoBehaviour
         this.enabled = false;
     }
 
+    public virtual void Start()
+    {
+    }
+
+    public virtual void Update()
+    {
+    }
+
+
     public void Enable()
     {
         Enable(this.duration);

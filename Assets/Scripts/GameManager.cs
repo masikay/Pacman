@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,8 +11,26 @@ public class GameManager : MonoBehaviour
     public int score { get; private set; }
     public int lives { get; private set; }
 
-    private void Start()
+    private new AudioSource audio = null;
+
+    public AudioClip gameStartSFX;
+    public AudioClip pelletSFX1;
+    public AudioClip pelletSFX2;
+    public AudioClip powerPelletSFX;
+    public AudioClip sirenSFX1;
+    public AudioClip ghostEatenSFX;
+    public AudioClip retreatSFX;
+    public AudioClip deathSFX1;
+    public AudioClip deathSFX2;
+
+    public bool isFirstPelletEaten;
+
+    private void Awake()
     {
+        this.audio = this.gameObject.GetComponent<AudioSource>();
+    }
+    private void Start()
+    { 
         NewGame();
     }
 
@@ -27,7 +46,18 @@ public class GameManager : MonoBehaviour
     {
         SetScore(0);
         SetLives(3);
+        StartCoroutine(PlayStartSound());
         NewRound();
+    }
+
+    private IEnumerator PlayStartSound()
+    {
+        Time.timeScale = 0;
+        this.audio.PlayOneShot(this.gameStartSFX);
+        yield return new WaitWhile(() => this.audio.isPlaying);
+        Time.timeScale = 1;
+        this.audio.clip = this.sirenSFX1;
+        this.audio.Play();
     }
 
     private void NewRound()
@@ -50,7 +80,9 @@ public class GameManager : MonoBehaviour
         }
 
         this.pacman.ResetState();
-    }
+
+        this.isFirstPelletEaten = false;
+}
 
     private void GameOver()
     {
@@ -77,11 +109,17 @@ public class GameManager : MonoBehaviour
         int points = ghost.points * this.ghostMultiplier;
         SetScore(this.score + points);
         this.ghostMultiplier++;
+        this.audio.PlayOneShot(this.ghostEatenSFX);
+        this.audio.clip = this.retreatSFX;
+        this.audio.Play();
     }
 
     public void PacmanEaten()
     {
-        this.pacman.gameObject.SetActive(false);
+        this.pacman.DeathSequence();
+        this.audio.Stop();
+        StartCoroutine(PlayDeathSFX());
+        this.audio.PlayOneShot(this.deathSFX2);
 
         SetLives(this.lives - 1);
 
@@ -95,9 +133,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayDeathSFX()
+    {
+        this.audio.PlayOneShot(this.deathSFX1);
+        while (this.audio.isPlaying)
+        {
+            yield return null;
+        }
+
+        this.audio.PlayOneShot(this.deathSFX2);
+        while (this.audio.isPlaying)
+        {
+            yield return null;
+        }
+        this.audio.PlayOneShot(this.deathSFX2);
+        while (this.audio.isPlaying)
+        {
+            yield return null;
+        }
+    }
+
     public void PelletEaten(Pellet pellet)
     {
         pellet.gameObject.SetActive(false);
+        if (!this.isFirstPelletEaten)
+        {
+            this.audio.PlayOneShot(this.pelletSFX1);
+            Invoke(nameof(ResetPelletSFX), 0.25f);
+        }
+        else
+        {
+            this.audio.PlayOneShot(this.pelletSFX2);
+            CancelInvoke();
+        }
+
+        this.isFirstPelletEaten = !this.isFirstPelletEaten;
 
         SetScore(this.score + pellet.points);
 
@@ -108,6 +178,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ResetPelletSFX()
+    {
+        this.isFirstPelletEaten = false;  
+    }
+
     public void PowerPelletEaten(PowerPellet pellet)
     {
         for (int i = 0; i < this.ghosts.Length; i++)
@@ -116,6 +191,7 @@ public class GameManager : MonoBehaviour
         }
 
         PelletEaten(pellet);
+        this.audio.PlayOneShot(powerPelletSFX);
         CancelInvoke();
         Invoke(nameof(ResetGhostMultiplier), pellet.duration);
     }
