@@ -20,9 +20,8 @@ public class GameManager : MonoBehaviour
     public AudioClip sirenSFX1;
     public AudioClip ghostEatenSFX;
     public AudioClip retreatSFX;
-    public AudioClip deathSFX1;
-    public AudioClip deathSFX2;
-
+    public AudioClip deathSFX;
+ 
     public bool isFirstPelletEaten;
 
     private void Awake()
@@ -118,8 +117,9 @@ public class GameManager : MonoBehaviour
     {
         this.pacman.DeathSequence();
         this.audio.Stop();
+        float animationTime = deathSFX.length / this.pacman.deathSequence.GetComponent<AnimatedSprite>().sprites.Length;
+        this.pacman.deathSequence.GetComponent<AnimatedSprite>().animationTime = animationTime;
         StartCoroutine(PlayDeathSFX());
-        this.audio.PlayOneShot(this.deathSFX2);
 
         SetLives(this.lives - 1);
 
@@ -135,18 +135,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PlayDeathSFX()
     {
-        this.audio.PlayOneShot(this.deathSFX1);
-        while (this.audio.isPlaying)
-        {
-            yield return null;
-        }
+        this.pacman.movement.SetDirection(Vector3.up, true);
+        this.pacman.transform.rotation = Quaternion.identity;
 
-        this.audio.PlayOneShot(this.deathSFX2);
-        while (this.audio.isPlaying)
-        {
-            yield return null;
-        }
-        this.audio.PlayOneShot(this.deathSFX2);
+        this.audio.PlayOneShot(this.deathSFX);
         while (this.audio.isPlaying)
         {
             yield return null;

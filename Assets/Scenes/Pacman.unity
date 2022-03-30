@@ -10068,8 +10068,7 @@ MonoBehaviour:
   sirenSFX1: {fileID: 8300000, guid: a5f97d605bd996544a67ea24a3757c35, type: 3}
   ghostEatenSFX: {fileID: 8300000, guid: 75ce9eedf667629448ca24696a506573, type: 3}
   retreatSFX: {fileID: 8300000, guid: 4ef17c3d833e6cc4cb7c05fa9bde8f5e, type: 3}
-  deathSFX1: {fileID: 8300000, guid: 594523318b48b39459c916d67938191b, type: 3}
-  deathSFX2: {fileID: 8300000, guid: 563eba57349e9364eb219424e536b04d, type: 3}
+  deathSFX: {fileID: 8300000, guid: b332b734bf18de14191acd96f832704f, type: 3}
   isFirstPelletEaten: 0
 --- !u!4 &1694091489
 Transform:
